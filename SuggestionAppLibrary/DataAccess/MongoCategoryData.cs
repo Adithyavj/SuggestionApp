@@ -23,6 +23,7 @@ public class MongoCategoryData : ICategoryData
         {
             var results = await _categories.FindAsync(_ => true);
             output = results.ToList();
+
             // putting value in cache (with a timespan of 1 day, data will be cached for a single day)
             _cache.Set(cacheName, output, TimeSpan.FromDays(1));
         }
