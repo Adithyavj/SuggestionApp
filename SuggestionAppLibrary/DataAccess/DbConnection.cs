@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
 
 namespace SuggestionAppLibrary.DataAccess;
 
