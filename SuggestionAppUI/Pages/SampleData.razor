@@ -1,6 +1,8 @@
 ﻿@page "/SampleData"
 @inject ICategoryData categoryData
 @inject IStatusData statusData
+@inject IUserData userData
+@inject ISuggestionData suggestionData
 
 <h3>Sample Data</h3>
 
@@ -21,9 +23,95 @@ else
     <button class="btn btn-primary" @onclick="CreateStatuses">Create Statuses</button>
 }
 
+ @*Should Only be clicked once*@
+<button class = "btn btn-danger" @onclick="GenerateSampleData">Create Sample Data</button>
+
 @code {
     private bool categoriesCreated = false;
     private bool statusesCreated = false;
+
+    private async Task GenerateSampleData()
+    {
+        // create sample user.
+        UserModel user = new()
+            {
+                FirstName = "Adithya",
+                LastName = "Vijay",
+                EmailAddress = "adithyavj@test.com",
+                DisplayName = "Sample Adithya Vijay",
+                ObjectIdentifier = "abc-123"
+            };
+        await userData.CreateUser(user);
+
+        // Find the user to get the _id mongo creates
+        var foundUser = await userData.GetUserFromAuthentication("abc-123");
+        var categories = await categoryData.GetAllCategories();
+        var statuses = await statusData.GetAllStatuses();
+
+        // Id of user who voted (sample data)
+        HashSet<string> votes = new();
+        votes.Add("1");
+        votes.Add("2");
+        votes.Add("3");
+
+        // create sample suggestion
+        SuggestionModel suggestion = new()
+            {
+                Author = new BasicUserModel(foundUser),
+                Category = categories[0],
+                Suggestion = "Our First suggestion",
+                Description = "This is a suggestion created by the sample data generation method"
+            };
+        await suggestionData.CreateSuggestion(suggestion);
+
+        suggestion = new()
+            {
+                Author = new BasicUserModel(foundUser),
+                Category = categories[1],
+                Suggestion = "Our Second suggestion",
+                Description = "This is a suggestion created by the sample data generation method",
+                SuggestionStatus = statuses[0],
+                OwnerNotes = "This is the note for the status."
+            };
+        await suggestionData.CreateSuggestion(suggestion);
+
+        suggestion = new()
+            {
+                Author = new BasicUserModel(foundUser),
+                Category = categories[2],
+                Suggestion = "Our Third suggestion",
+                Description = "This is a suggestion created by the sample data generation method",
+                SuggestionStatus = statuses[1],
+                OwnerNotes = "This is the note for the status."
+            };
+        await suggestionData.CreateSuggestion(suggestion);
+
+        suggestion = new()
+            {
+                Author = new BasicUserModel(foundUser),
+                Category = categories[3],
+                Suggestion = "Our Fourth suggestion",
+                Description = "This is a suggestion created by the sample data generation method",
+                SuggestionStatus = statuses[2],
+                UserVotes = votes,
+                OwnerNotes = "This is the note for the status."
+            };
+        await suggestionData.CreateSuggestion(suggestion);
+
+        votes.Add("4");
+
+         suggestion = new()
+            {
+                Author = new BasicUserModel(foundUser),
+                Category = categories[4],
+                Suggestion = "Our Fifth suggestion",
+                Description = "This is a suggestion created by the sample data generation method",
+                SuggestionStatus = statuses[3],
+                UserVotes = votes,
+                OwnerNotes = "This is the note for the status."
+            };
+        await suggestionData.CreateSuggestion(suggestion);
+    }
 
     private async Task CreateCategories()
     {
