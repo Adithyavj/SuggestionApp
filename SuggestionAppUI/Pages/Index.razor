@@ -123,4 +123,33 @@
         selectedStatus = status;
         await FilterSuggestions();
     }
+
+    private string GetUpvoteTopText(SuggestionModel suggestion)
+    {
+        if (suggestion.UserVotes?.Count > 0)
+        {
+            return suggestion.UserVotes.Count.ToString("00"); //01,02,...10
+        }
+        else
+        {
+            return "Click To";
+        }
+    }
+
+    private string GetUpvoteBottomText(SuggestionModel suggestion)
+    {
+        if (suggestion.UserVotes?.Count > 1)
+        {
+            return "Upvotes";
+        }
+        else
+        {
+            return "Upvote";
+        }
+    }
+
+    private void OpenDetails(SuggestionModel suggestion)
+    {
+        navManager.NavigateTo($"/Details/{suggestion.Id}");
+    }
 }
