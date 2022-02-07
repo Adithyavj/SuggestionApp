@@ -99,4 +99,28 @@
 
         await SaveFilterState();
     }
+
+    private async Task OrderByNew(bool isNew)
+    {
+        isSortedByNew = isNew;
+        await FilterSuggestions();
+    }
+
+    private async Task OnSearchInput(string searchInput)
+    {
+        searchText = searchInput;
+        await FilterSuggestions();
+    }
+
+    private async Task OnCategoryClick(string category = "All")
+    {
+        selectedCategory = category;
+        await FilterSuggestions();
+    }
+
+    private async Task OnStatusClick(string status = "All")
+    {
+        selectedStatus = status;
+        await FilterSuggestions();
+    }
 }
