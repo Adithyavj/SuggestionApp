@@ -43,7 +43,7 @@ public class MongoSuggestionData : ISuggestionData
             var result = await _suggestions.FindAsync(s => s.Author.Id == userId);
             output = result.ToList();
 
-            _cache.Set(userId, userId, TimeSpan.FromMinutes(1)); // we give key as userId itself
+            _cache.Set(userId, output, TimeSpan.FromMinutes(1));
         }
 
         return output;
