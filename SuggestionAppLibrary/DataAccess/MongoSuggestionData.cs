@@ -34,6 +34,21 @@ public class MongoSuggestionData : ISuggestionData
         return output;
     }
 
+    // Get all suggestions including archived suggestions for a particular user
+    public async Task<List<SuggestionModel>> GetUsersSuggestions(string userId)
+    {
+        var output = _cache.Get<List<SuggestionModel>>(userId);
+        if (output is null)
+        {
+            var result = await _suggestions.FindAsync(s => s.Author.Id == userId);
+            output = result.ToList();
+
+            _cache.Set(userId, userId, TimeSpan.FromMinutes(1)); // we give key as userId itself
+        }
+
+        return output;
+    }
+
     // Get all approved suggestions
     public async Task<List<SuggestionModel>> GetAllApprovedSuggestions()
     {
