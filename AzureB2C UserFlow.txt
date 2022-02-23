@@ -1,0 +1,45 @@
+The User flow for the entire B2C Directory that we have created in the Azure portal is as follows:
+1. Add New User Flow
+2. First User Flow - Select SignUp and SignIn -> Recommended
+	2.1 Give a name (susi)
+	2.2 Give Identity provider -> Email Signup
+	2.3 Multifactor authentication -> Off
+	2.4 Conditional Access (Leave it as it is)
+	2.5 User attributes and token claims -> Show more -> 
+		2.5.1 Display Name (collect attribute and return claim)
+		2.5.2 Email Address (collect attribute)
+		2.5.3 Email Addresses (return claim)
+		2.5.4 Given Name (collect attribute and return claim)
+		2.5.5 Job title (return claim)
+		2.5.6 Surname (collect attribute and return claim)
+		2.5.7 User is new (return claim)
+		2.5.8 User's Object Id (return claim)
+	2.6 Create
+3. Second User Flow - Profile editing -> Recommended
+	3.1 Give a name (edit)
+	3.2 Give Identity provider -> Email Signup
+	3.3 Multifactor authentication -> Off
+	3.4 Conditional Access (Leave it as it is)
+	3.5 User attributes and token claims -> Show more -> 
+		3.5.1 Display Name (collect attribute and return claim)
+		3.5.2 Email Addresses (return claim)
+		3.5.3 Given Name (collect attribute and return claim)
+		3.5.4 Job title (return claim)
+		3.5.5 Surname (collect attribute and return claim)
+		3.5.6 User's Object Id (return claim)
+	3.6 Create
+4. Third User Flow - Password Reset -> Recommended
+	4.1 Give a name (reset)
+	4.2 Reset password using email address
+	4.3 Multifactor authentication -> Off
+	4.4 Conditional Access (Leave it as it is)
+	4.5 Application claims
+		4.5.1 Display Name (return claim)
+		4.5.2 Email Addresses (return claim)
+		4.5.3 Given Name (return claim)
+		4.5.4 Job title (return claim)
+		4.5.5 Surname (return claim)
+		4.5.6 User's Object Id (return claim)
+	4.6 Create
+
+This will create the login pages

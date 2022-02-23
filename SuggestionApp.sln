@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B3F7E4B9-69CA-430A-AC27-14E31DF0F434}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		AzureB2C UserFlow.txt = AzureB2C UserFlow.txt
 	EndProjectSection
 EndProject
 Global
