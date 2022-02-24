@@ -107,7 +107,7 @@ public class MongoSuggestionData : ISuggestionData
             var userInTransaction = db.GetCollection<UserModel>(_db.UserCollectionName);
 
             // Get the user who upvoted
-            var user = await _userData.GetUser(suggestion.Author.Id); // userId?
+            var user = await _userData.GetUser(userId);
 
             if (isUpvote)
             {
