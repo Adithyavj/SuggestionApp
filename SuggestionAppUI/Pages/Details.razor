@@ -1,4 +1,6 @@
 ﻿@page "/Details/{Id}"
+@inject AuthenticationStateProvider authProvider
+@inject IUserData userData
 @inject ISuggestionData suggestionData
 @inject NavigationManager navManager
 
@@ -11,7 +13,7 @@
             <div>
                 @*Left hand side*@
                 <div>
-                    <div>
+                    <div @onclick="VoteUp">
                         <div>@GetUpvoteTopText()</div>
                         <span class="oi oi-caret-top"></span>
                         <div>@GetUpvoteBottomText()</div>
@@ -59,11 +61,13 @@
     public string Id { get; set; }
 
     private SuggestionModel suggestion;
+    private UserModel loggedInUser;
 
     protected async override Task OnInitializedAsync()
     {
         // Get data of the suggestion that was selected
         suggestion = await suggestionData.GetSuggestion(Id);
+        loggedInUser = await authProvider.GetUserFromAuth(userData);
     }
 
     private void ClosePage()
@@ -79,7 +83,14 @@
         }
         else
         {
-            return "Click To";
+            if (suggestion.Author.Id == loggedInUser?.Id)
+            {
+                return "Awaiting";
+            }
+            else
+            {
+                return "Click To";
+            }
         }
     }
 
@@ -92,6 +103,31 @@
         else
         {
             return "Upvote";
+        }
+    }
+
+    private async Task VoteUp()
+    {
+        if (loggedInUser is not null)
+        {
+            if (suggestion.Author.Id == loggedInUser.Id)
+            {
+                // Can't vote on your own suggestion
+                return;
+            }
+
+            // UserVotes is a hashSet and cannot have duplicate values
+            // Does it locally
+            if (suggestion.UserVotes.Add(loggedInUser.Id) == false)
+            {
+                suggestion.UserVotes.Remove(loggedInUser.Id);
+            }
+            // Update to database
+            await suggestionData.UpVoteSuggestion(suggestion.Id, loggedInUser.Id);
+        }
+        else
+        {
+            navManager.NavigateTo("/MicrosoftIdentity/Account/SignIn", true);
         }
     }
 }
