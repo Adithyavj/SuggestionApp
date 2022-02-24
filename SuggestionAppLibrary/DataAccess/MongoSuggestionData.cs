@@ -101,7 +101,7 @@ public class MongoSuggestionData : ISuggestionData
             }
 
             // After upvote is done, we can update the suggestion by the updated suggestion value
-            await suggestionsInTransaction.ReplaceOneAsync(s => s.Id == suggestionId, suggestion);
+            await suggestionsInTransaction.ReplaceOneAsync(session, s => s.Id == suggestionId, suggestion);
 
             // Get all users from db
             var userInTransaction = db.GetCollection<UserModel>(_db.UserCollectionName);
@@ -120,7 +120,7 @@ public class MongoSuggestionData : ISuggestionData
             }
 
             // After upvote is done, we can update the user by updated user value
-            await userInTransaction.ReplaceOneAsync(u => u.Id == userId, user);
+            await userInTransaction.ReplaceOneAsync(session, u => u.Id == userId, user);
 
             await session.CommitTransactionAsync();
 
@@ -148,13 +148,13 @@ public class MongoSuggestionData : ISuggestionData
 
             // Insert new suggestion into suggestion table
             var suggestionsInTransaction = db.GetCollection<SuggestionModel>(_db.SuggestionCollectionName);
-            await suggestionsInTransaction.InsertOneAsync(suggestion);
+            await suggestionsInTransaction.InsertOneAsync(session, suggestion);
 
             // Update the user
             var usersInTransactions = db.GetCollection<UserModel>(_db.UserCollectionName);
             var user = await _userData.GetUser(suggestion.Author.Id);
             user.AuthoredSuggestions.Add(new BasicSuggestionModel(suggestion));
-            await usersInTransactions.ReplaceOneAsync(u => u.Id == user.Id, user);
+            await usersInTransactions.ReplaceOneAsync(session, u => u.Id == user.Id, user);
 
             await session.CommitTransactionAsync();
         }
