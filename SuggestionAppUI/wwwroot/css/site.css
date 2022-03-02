@@ -28,8 +28,14 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: #FFFFFF;
+    text-decoration: none;
 }
+
+    a:hover, btn-link:hover {
+        color: #FFFFFF;
+        text-decoration: underline;
+    }
 
 .btn-primary {
     color: #fff;
@@ -294,4 +300,14 @@ a, .btn-link {
     font-weight: bold;
     font-size: 0.8rem;
     letter-spacing: 1.2px;
+}
+
+.nav-links {
+    display: flex;
+    text-align: center;
+    justify-content: flex-end;
+}
+
+.login-link {
+    padding-left: 1rem;
 }
