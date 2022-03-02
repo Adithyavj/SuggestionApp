@@ -19,20 +19,20 @@
                             <span class="oi oi-caret-top detail-upvote"></span>
                             <div class="text-uppercase">@GetUpvoteBottomText()</div>
                         </div> 
+                        <div class="suggestion-detail-date">
+                            <div>@suggestion.DateCreated.ToString("MM.dd.yyyy")</div>
+                        </div>
                     </div>
-                    <div class="suggestion-detail-date">
-                        <div>@suggestion.DateCreated.ToString("MM.dd.yyyy")</div>
+                    <div class="suggestion-detail-text">
+                        <div class="fw-bold mb-2 suggestion-detail-suggestion">@suggestion.Suggestion</div>
+                        <div class="mb-2 suggestion-detail-author">@suggestion.Author.DisplayName</div>
+                        <div class="mb-2">@suggestion.Description</div>
+                        <div class="suggestion-entry-text-category">
+                            @suggestion.Category.CategoryName
+                        </div>
                     </div>
                 </div>
                 @*Right hand side*@
-                <div class="suggestion-detail-text">
-                    <div class="fw-bold mb-2 suggestion-detail-suggestion">@suggestion.Suggestion</div>
-                    <div class="mb-2 suggestion-detail-author">@suggestion.Author.DisplayName</div>
-                    <div class="mb-2">@suggestion.Description</div>
-                    <div class="suggestion-entry-text-category">
-                        @suggestion.Category.CategoryName
-                    </div>
-                </div>
                 <div class="col-1 close-button-section">
                     <button class="btn btn-close" @onclick="ClosePage"></button>
                 </div>
