@@ -1,18 +1,18 @@
 ﻿@inject NavigationManager navManager
 
-<div>
-    <div>
-        <div>
-            <div>
-                <div>Authorization Required</div>
+<div class="row justify-content-center">
+    <div class="col-xl-8 col-lg-10 form-layout">
+        <div class="row">
+            <div class="col-11">
+                <div class="fw-bold mb-2 fs-5">Authorization Required</div>
                 <p>
                     You are not authorized to access this section. You need to be logged in 
                     to vote and submit suggestions. You need to be an admin to manage the 
                     suggestions.
                 </p>
             </div>
-            <div>
-                <button @onclick="ClosePage"></button>
+            <div class="col-1 close-button-section">
+                <button class="btn btn-close" @onclick="ClosePage"></button>
             </div>
         </div>
     </div>
