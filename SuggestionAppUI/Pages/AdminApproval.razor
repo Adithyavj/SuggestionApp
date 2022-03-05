@@ -30,7 +30,7 @@
                             <button class="btn" type="submit">
                                 <span class="oi oi-check submission-edit-approve"></span>
                             </button>
-                            <button class="btn" @onclick="(() => currentEditingTitle = string.Empty)">
+                            <button type="button" class="btn" @onclick="(() => currentEditingTitle = string.Empty)">
                                 <span class="oi oi-x submission-edit-reject"></span>
                             </button>
                         </EditForm>
@@ -55,7 +55,7 @@
                             <button class="btn" type="submit">
                                 <span class="oi oi-check submission-edit-approve"></span>
                             </button>
-                            <button class="btn" @onclick="(() => currentEditingDescription = string.Empty)">
+                            <button type="button" class="btn" @onclick="(() => currentEditingDescription = string.Empty)">
                                 <span class="oi oi-x submission-edit-reject"></span>
                             </button>
                         </EditForm>
