@@ -578,6 +578,21 @@ a, .btn-link {
         color: #39BAD8;
     }
 
+.my-submission-heading {
+    color: #000000;
+    text-transform: uppercase;
+}
+
+.my-submission-text {
+    margin-bottom: 0;
+    padding-left: 1rem;
+}
+
+.my-submission-seperator {
+    color: #A9A9A9;
+    height: 2px;
+    opacity: 1;
+}
 
 /* For Mobile Screen */
 .create-form {
