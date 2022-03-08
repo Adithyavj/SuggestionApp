@@ -46,11 +46,30 @@
                         <div class="suggestion-entry-text-title" @onclick="(() => OpenDetails(s))">
                             @s.Suggestion
                         </div>
-                        <div>
-                            <div class="suggestion-entry-text-category" @onclick="(() => OpenDetails(s))">
-                                @s.Category?.CategoryName
+                        @if (archivingSuggestion is null || archivingSuggestion.Id != s.Id)
+                        {
+                            <div class="suggestion-entry-bottom">
+                                <div class="suggestion-entry-text-category" @onclick="(() => OpenDetails(s))">
+                                    @s.Category?.CategoryName
+                                </div>
+                                <AuthorizeView Policy="Admin">
+                                    <button class="btn suggestion-entry-text-category btn-archive" @onclick="(() => archivingSuggestion = s)">
+                                        Archive
+                                    </button>
+                                </AuthorizeView>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="suggestion-entry-bottom">
+                                <button class="btn btn-archive btn-archive-confirm" @onclick="ArchiveSuggestion">
+                                    confirm
+                                </button>
+                                <button class="btn btn-archive btn-archive-reject" @onclick="(() => archivingSuggestion = null)">
+                                    cancel
+                                </button>
+                            </div>
+                        }
                     </div>
                     @*Right Side*@
                     <div class="suggestion-entry-status @GetSuggestionStatusClass(s)">
@@ -95,6 +114,7 @@
     private List<SuggestionModel> suggestions;
     private List<CategoryModel> categories;
     private List<StatusModel> statuses;
+    private SuggestionModel archivingSuggestion;
 
     private string selectedCategory = "All";
     private string selectedStatus = "All";
@@ -107,6 +127,15 @@
         categories = await categoryData.GetAllCategories();
         statuses = await statusData.GetAllStatuses();
         await LoadAndVerifyUser();
+    }
+
+    private async Task ArchiveSuggestion()
+    {
+        archivingSuggestion.Archived = true;
+        await suggestionData.UpdateSuggestion(archivingSuggestion);
+        suggestions.Remove(archivingSuggestion);
+        archivingSuggestion = null;
+        //await FilterSuggestions();
     }
 
     private void LoadCreatePage()
