@@ -26,6 +26,27 @@
             placeholder="Search" aria-label="Search box" 
             @oninput="((txt) => OnSearchInput((string)txt.Value))" />
     </div>
+    <div class="col-12 d-block d-md-none">
+        @if (categories is not null && showCategories)
+        {
+            <div class="categories">
+                <span class="text-uppercase fw-bold">Category</span>
+                <div class="@GetSelectedCategory()" @onclick="(() => OnCategoryClick())">All</div>
+                @foreach (var c in categories)
+                {
+                    <div class="@GetSelectedCategory(c.CategoryName)" @onclick="(() => OnCategoryClick(c.CategoryName))">
+                        @c.CategoryName
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="categories" @onclick="(() => showCategories = true)">
+                <span class="selected-category">@selectedCategory</span>
+            </div>
+        }
+    </div>
 </div>
 
 <div class="row">
@@ -82,7 +103,7 @@
         }
     </div>
     @*Right hand 1/3*@
-    <div class="col-md-4 col-xl-3">
+    <div class="col-md-4 col-xl-3 d-none d-md-block">
         @if (categories is not null)
         {
             <div class="categories">
@@ -119,7 +140,9 @@
     private string selectedCategory = "All";
     private string selectedStatus = "All";
     private string searchText = "Nothing";
-    bool isSortedByNew = true;
+    private bool isSortedByNew = true;
+    private bool showCategories = false;
+    private bool showStatuses = false;
 
     // Loading data
     protected async override Task OnInitializedAsync()
@@ -295,12 +318,14 @@
     private async Task OnCategoryClick(string category = "All")
     {
         selectedCategory = category;
+        showCategories = false;
         await FilterSuggestions();
     }
 
     private async Task OnStatusClick(string status = "All")
     {
         selectedStatus = status;
+        showStatuses = false;
         await FilterSuggestions();
     }
 
