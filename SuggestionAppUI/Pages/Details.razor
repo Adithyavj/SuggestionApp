@@ -27,8 +27,8 @@
                     <div class="suggestion-detail-text">
                         <div class="fw-bold mb-2 suggestion-detail-suggestion">@suggestion.Suggestion</div>
                         <div class="mb-2 suggestion-detail-author">@suggestion.Author.DisplayName</div>
-                        <div class="mb-2">@suggestion.Description</div>
-                        <div class="suggestion-entry-text-category">
+                        <div class="mb-2 d-none d-md-block">@suggestion.Description</div>
+                        <div class="suggestion-entry-text-category d-none d-md-block">
                             @suggestion.Category.CategoryName
                         </div>
                     </div>
@@ -36,6 +36,12 @@
                 @*Right hand side*@
                 <div class="col-1 close-button-section">
                     <button class="btn btn-close" @onclick="ClosePage"></button>
+                </div>
+            </div>
+            <div class="row d-block d-md-none">
+                <div class="suggestion-detail-text">
+                    <div>@suggestion.Description</div>
+                    <div class="suggestion-entry-text-category">@suggestion.Category.CategoryName</div>
                 </div>
             </div>
         }
