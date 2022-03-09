@@ -59,6 +59,72 @@
     </div>
 }
 
+@if (suggestion is not null)
+{
+    <AuthorizeView Policy="Admin">
+        <div class="row justify-content-center detail-form">
+            <div class="col-xl-8 col-lg-10 form-layout admin-details">
+                <div>
+                    <div class="suggestion-detail-status fw-bold mb-2 suggestion-detail-suggestion">
+                        Set Status
+                    </div>
+                    @if (string.IsNullOrWhiteSpace(settingStatus))
+                    {
+                        <div class="admin-set-statuses">
+                            <button @onclick="@(() => settingStatus = "completed")" 
+                                class="btn suggestion-entry-text-category btn-archive btn-status-completed">
+                                completed
+                            </button>
+                            <button @onclick="@(() => settingStatus = "watching")" 
+                                class="btn suggestion-entry-text-category btn-archive btn-status-watching">
+                                watching
+                            </button>
+                            <button @onclick="@(() => settingStatus = "upcoming")" 
+                                class="btn suggestion-entry-text-category btn-archive btn-status-upcoming">
+                                upcoming
+                            </button>
+                            <button @onclick="@(() => settingStatus = "dismissed")" 
+                                class="btn suggestion-entry-text-category btn-archive btn-status-dismissed">
+                                dismissed
+                            </button>
+                        </div>
+                    }
+                    else if (settingStatus == "completed")
+                    {
+                        <div>
+                            <input @bind="urlText" class="form-control rounded-control" 
+                            type="text" placeholder="Url" aria-label="Content Url" />
+                        </div>
+                        <div class="suggestion-entry-bottom">
+                            <button class="btn btn-archive-confirm" 
+                                    @onclick="CompleteSetStatus">
+                                    confirm
+                            </button>
+                            <button class="btn btn-archive-reject" 
+                                    @onclick="(() => settingStatus = null)">
+                                cancel
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="suggestion-entry-bottom">
+                            <button class="btn btn-archive-confirm" 
+                                    @onclick="CompleteSetStatus">
+                                    confirm
+                            </button>
+                            <button class="btn btn-archive-reject" 
+                                    @onclick="(() => settingStatus = null)">
+                                cancel
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </AuthorizeView>
+}
+
 @code {
     [Parameter]
     public string Id { get; set; }

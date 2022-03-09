@@ -619,6 +619,32 @@ a, .btn-link {
     color: #E9354C;
 }
 
+.admin-details {
+    margin-top: 20px;
+}
+
+.admin-set-statuses {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.btn-status-completed:hover {
+    color: #B5D43A;
+}
+
+.btn-status-watching:hover {
+    color: #E9354C;
+}
+
+.btn-status-upcoming:hover {
+    color: #835581;
+}
+
+.btn-status-dismissed:hover {
+    color: #F9C30B;
+}
+
 /* For Mobile Screen */
 .create-form {
 }
