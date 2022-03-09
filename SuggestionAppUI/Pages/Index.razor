@@ -46,6 +46,29 @@
                 <span class="selected-category">@selectedCategory</span>
             </div>
         }
+        
+
+        @if (statuses is not null && showStatuses)
+        {
+            <div class="statuses">
+                <span class="text-uppercase fw-bold">Status</span>
+                <div class="@GetSelectedStatus()" 
+                    @onclick="(() => OnStatusClick())">All</div>
+                @foreach (var s in statuses)
+                {
+                    <div class="@GetSelectedStatus(s.StatusName)" 
+                        @onclick="(() => OnStatusClick(s.StatusName))">
+                        @s.StatusName
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="statuses" @onclick="(() => showStatuses = true)">
+                <span class="selected-status">@selectedStatus</span>
+            </div>
+        }
     </div>
 </div>
 
